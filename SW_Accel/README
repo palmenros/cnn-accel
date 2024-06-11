@@ -1,0 +1,28 @@
+Decompress the test images:
+tar xJvf images.txz
+This will create the images/ folder.
+
+1) Compile the code (either in x86-64 or in the Pynq board):
+  make
+
+2) Execute with an image:
+  ./cnnSolver cat.9495.jpg.rgba.planar
+  ./cnnSolver dog.9499.jpg.rgba.planar
+
+3) Execute over all the test image set:
+  ./runAll.sh
+
+
+---------
+The original images are in JPG format. To facilitate the loading in the C solver, they are converted to uncompressed RGB planar format. That is, first all the pixels of the R channel, then all the pixels of the G channel, then all the pixels of the B channel. In this way, the three arrays can be directly fed into the three filters of the first convolutional layer.
+
+--------
+
+The SW solver contains all the code to classify the image. It can be compiled both for x85 and for the Pynq board.
+The code uses inttypes.h to automatically handle 32/64 bit systems in printf statements.
+Folder model/ contains the files extracted from the trained model.
+
+The execution produces an output that details the execution time of every layer, and then aggregates execution times by layer type. This helps to determine where is most of the time spent.
+
+The execution with runAll.sh filters only the classification output line, which can then be compared with the outputCats.txt or outputDogs.txt files to build the confussion matrix or compare with the HW optimized versions or different quantizations.
+

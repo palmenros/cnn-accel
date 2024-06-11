@@ -1,0 +1,7 @@
+#!/bin/bash
+rm modules.order
+rm Module.symvers
+rm .conv.*
+rm conv.mod*
+rm conv.ko*
+rm conv.o
